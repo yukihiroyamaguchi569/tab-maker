@@ -16,6 +16,7 @@
   <div id="alphaTab"></div>
   <script>
     const api = new alphaTab.AlphaTabApi(document.getElementById('alphaTab'), {
+      core: { includeNoteBounds: true },
       display: { staveProfile: 'Tab' },
       player: {
         playerMode: alphaTab.PlayerMode.EnabledAutomatic,
@@ -25,6 +26,7 @@
     const playButton = document.getElementById('play');
     api.playerReady.on(() => { playButton.disabled = false; });
     playButton.addEventListener('click', () => api.playPause());
+    api.noteMouseDown.on((note) => { if (api.isReadyForPlayback) api.playNote(note); });
     api.tex(`
       \\title "Same Old Blues - Aaug"
       \\tempo 77
